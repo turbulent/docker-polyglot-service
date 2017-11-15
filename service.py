@@ -27,7 +27,8 @@ from polyglot.detect import Detector
 def detect():
     trimmed = request.query.q.strip()
     query = (trimmed[:4096]) if len(trimmed) > 4096 else trimmed
-    detector = Detector(query)
+    # quiet=True -- don't throw exception when detection is unreliable
+    detector = Detector(query, quiet=True)
     out = '{"locale":"{{locl}}","confidence":{{conf}},"read_bytes":{{read}}}'
     locl = detector.language.locale.getName().replace('_', '-')
     conf = detector.language.confidence
